@@ -20,3 +20,15 @@ test('Connexion avec un mdp invalide', async ({ page }) => {
     'Epic sadface: Username and password do not match any user in this service'
   );
 });
+
+test('Connexion avec utilisateur bloqué', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  await loginPage.goto();
+  await loginPage.loginAsLockedUser();
+  await loginPage.verifyLoginFailed();
+  const error = await loginPage.getLoginErrorMessage();
+  expect(error).toContain(
+    'Epic sadface: Sorry, this user has been locked out.'
+  );
+});

@@ -33,6 +33,10 @@ export class LoginPage {
     await this.login('standard_user', 'secret_sauce1');
   }
 
+    async loginAsLockedUser() {
+    await this.login('locked_out_user', 'secret_sauce');
+  }
+
   async verifyLoginSucceeded() {
     await expect(this.page).toHaveURL(/inventory/);
   }
