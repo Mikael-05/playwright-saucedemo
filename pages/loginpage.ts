@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { Logger } from '../utils/logger';
 
 export class LoginPage {
   readonly page: Page;
@@ -17,12 +18,15 @@ export class LoginPage {
 
   async goto() {
     await this.page.goto('https://www.saucedemo.com/');
+    Logger.success("Ouverture site saucedemo.com");
   }
 
   async login(user: string, pwd: string) {
+    Logger.info(`Connexion avec ${user}`);  
     await this.username.fill(user);
     await this.password.fill(pwd);
     await this.loginButton.click();
+    Logger.success(`Connexion avec ${user} effectuée`);
   }
 
   async loginAsStandardUser() {
