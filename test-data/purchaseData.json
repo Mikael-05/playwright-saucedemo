@@ -1,0 +1,20 @@
+[
+  {
+    "id": "PUR-001",
+    "product": "Sauce Labs Backpack",
+    "customer": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "postalCode": "75001"
+    }
+  },
+  {
+    "id": "PUR-002",
+    "product": "Sauce Labs Bike Light",
+    "customer": {
+      "firstName": "Alice",
+      "lastName": "Martin",
+      "postalCode": "69001"
+    }
+  }
+]

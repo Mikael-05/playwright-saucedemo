@@ -23,6 +23,7 @@ export class LoginPage {
 
   async login(user: string, pwd: string) {
     Logger.info(`Connexion avec ${user}`);  
+    //Logger.info(`Connexion avec ${pwd}`); 
     await this.username.fill(user);
     await this.password.fill(pwd);
     await this.loginButton.click();
