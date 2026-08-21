@@ -8,12 +8,17 @@ export class InventoryPage {
   readonly articles: Locator;
   readonly sortDropdown: Locator;
   readonly productPrices: Locator;
-
+  readonly addToCartButtons: Locator;
+  readonly cartBadge: Locator;
+ 
+  
   constructor(private page: Page) {
     this.cart = page.locator('[data-test="shopping-cart-link"]');
     this.articles = page.locator('.inventory_item');
     this.sortDropdown = page.locator('[data-test="product-sort-container"]');
     this.productPrices = page.locator('.inventory_item_price');
+    this.addToCartButtons = page.locator('[data-test^="add-to-cart"]');
+    this.cartBadge = page.locator('.shopping_cart_badge');
   }
 
   product(name: string): Locator {
@@ -54,5 +59,21 @@ export class InventoryPage {
     const sortedPrices = [...prices].sort((a, b) => a - b);
 
     expect(prices).toEqual(sortedPrices);
+  }
+
+    async addAllProductsToCart(): Promise<void> {
+    const buttonsCount = await this.addToCartButtons.count();
+
+    while (await this.addToCartButtons.count() > 0) {
+      await this.addToCartButtons.first().click();
+    }
+  }
+
+  async getCartItemCount(): Promise<number> {
+    if (await this.cartBadge.isVisible()) {
+      return Number(await this.cartBadge.textContent());
+    }
+
+    return 0;
   }
 }
