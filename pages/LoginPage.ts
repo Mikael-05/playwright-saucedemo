@@ -50,9 +50,10 @@ export class LoginPage {
     await expect(this.errorMessage).toBeVisible();
   }
 
-async getLoginErrorMessage(): Promise<string> {
-  await expect(this.errorMessage).toBeVisible();
-  return await this.errorMessage.innerText();
-}
+  async getLoginErrorMessage(): Promise<string> {
+    Logger.info(`Récupération du message d'erreur de connexion`);
+    await expect(this.errorMessage).toBeVisible();
+    return await this.errorMessage.innerText();
+  }
 
 }
