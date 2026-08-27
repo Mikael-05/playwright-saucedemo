@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
+import { Logger } from '../utils/Logger';
+
+Logger.info(`login.spec.ts`);
 
 test('Connexion avec un utilisateur valide', async ({ page }) => {
   const loginPage = new LoginPage(page);

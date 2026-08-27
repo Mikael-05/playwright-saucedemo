@@ -2,7 +2,9 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
+import { Logger } from '../utils/Logger';
 
+Logger.info(`cartTests.spec.ts`);
 
 test('Ajoute tous les produits et les retire du panier', async ({ page }) => {
   const loginPage = new LoginPage(page);

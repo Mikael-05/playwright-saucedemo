@@ -1,7 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
+import { Logger } from '../utils/Logger';
 
+
+Logger.info(`inventoryTests.spec.ts`);
 
 test('Vérifie le nombre de produit', async ({ page }) => {
   const loginPage = new LoginPage(page);

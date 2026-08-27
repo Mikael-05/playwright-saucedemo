@@ -10,6 +10,9 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 import { PurchaseFlow } from '../flow/PurchaseFlow';
 
 import purchaseData from '../test-data/purchaseData.json';
+import { Logger } from '../utils/Logger';
+
+Logger.info(`purchaseFlowddt.spec.ts`);
 
 for (const data of purchaseData) {
 

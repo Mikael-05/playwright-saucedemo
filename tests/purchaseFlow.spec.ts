@@ -8,6 +8,9 @@ import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 
 import { PurchaseFlow } from '../flow/PurchaseFlow';
+import { Logger } from '../utils/Logger';
+
+Logger.info(`purchaseFlow.spec.ts`);
 
 test('user can purchase a product', async ({ page }) => {
 

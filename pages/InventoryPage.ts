@@ -83,4 +83,11 @@ export class InventoryPage {
     }
     return 0;
   }
+
+  async logout(): Promise<void> {
+    await this.page.getByRole('button', { name: 'Open Menu' }).click();
+    await this.page.getByRole('link', { name: 'Logout' }).click();
+
+    await expect(this.page).toHaveURL(/\/$/);
+  }
 }
