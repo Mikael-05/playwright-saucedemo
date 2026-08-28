@@ -16,7 +16,9 @@ Logger.info(`purchaseFlowddt.spec.ts`);
 
 for (const data of purchaseData) {
 
-    test(`Purchase product - ${data.product}`, async ({ page }) => {
+    test(`Purchase product - ${data.product}`,  {
+  tag: ['@regression', '@purchase']
+}, async ({ page }) => {
     
         //test('user can purchase a product', async ({ page }) => {
 

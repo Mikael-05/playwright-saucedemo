@@ -4,7 +4,9 @@ import { Logger } from '../utils/Logger';
 
 Logger.info(`login.spec.ts`);
 
-test('Connexion avec un utilisateur valide', async ({ page }) => {
+test('Connexion avec un utilisateur valide', {
+  tag: ['@smoke', '@login']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();
@@ -12,7 +14,9 @@ test('Connexion avec un utilisateur valide', async ({ page }) => {
   await loginPage.verifyLoginSucceeded();
 });
 
-test('Connexion avec un mdp invalide', async ({ page }) => {
+test('Connexion avec un mdp invalide', {
+  tag: ['@smoke', '@login']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();
@@ -24,7 +28,9 @@ test('Connexion avec un mdp invalide', async ({ page }) => {
   );
 });
 
-test('Connexion avec utilisateur bloqué', async ({ page }) => {
+test('Connexion avec utilisateur bloqué', {
+  tag: ['@sanity', '@login']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();

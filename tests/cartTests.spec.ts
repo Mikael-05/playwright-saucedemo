@@ -6,7 +6,9 @@ import { Logger } from '../utils/Logger';
 
 Logger.info(`cartTests.spec.ts`);
 
-test('Ajoute tous les produits et les retire du panier', async ({ page }) => {
+test('Ajoute tous les produits et les retire du panier', {
+  tag: ['@sanity', '@cart']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
   const cartPage = new CartPage(page);

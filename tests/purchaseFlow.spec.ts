@@ -12,7 +12,9 @@ import { Logger } from '../utils/Logger';
 
 Logger.info(`purchaseFlow.spec.ts`);
 
-test('user can purchase a product', async ({ page }) => {
+test('user can purchase a product',  {
+  tag: ['@smoke', '@purchase']
+}, async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);

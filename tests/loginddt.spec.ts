@@ -8,7 +8,9 @@ Logger.info(`loginddt.spec.ts`);
 
 for (const data of loginData) {
 
-    test(`Login - ${data.username} - ${data.password} - ${data.expected} - ${data.expectedErrorMessage}` , async ({ page }) => {
+    test(`Login - ${data.username} - ${data.password} - ${data.expected} - ${data.expectedErrorMessage}` , {
+  tag: ['@regression', '@login']
+}, async ({ page }) => {
 
         const loginPage = new LoginPage(page);
 

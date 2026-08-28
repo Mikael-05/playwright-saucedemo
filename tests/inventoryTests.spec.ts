@@ -6,7 +6,9 @@ import { Logger } from '../utils/Logger';
 
 Logger.info(`inventoryTests.spec.ts`);
 
-test('Vérifie le nombre de produit', async ({ page }) => {
+test('Vérifie le nombre de produit', {
+  tag: ['@smoke', '@inventory']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
 
@@ -18,7 +20,9 @@ test('Vérifie le nombre de produit', async ({ page }) => {
 });
 
 
-test('Trier les produits par prix croissant', async ({ page }) => {
+test('Trier les produits par prix croissant', {
+  tag: ['@sanity', '@inventory']
+}, async ({ page }) => {
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
 
