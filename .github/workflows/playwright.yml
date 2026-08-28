@@ -4,7 +4,17 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:  
+  workflow_dispatch:
+      inputs:
+        test_suite:
+          description: 'Suite de tests à exécuter'
+          required: true
+          default: 'smoke'
+          type: choice
+          options:
+            - smoke
+            - smoke-sanity
+            - smoke-sanity-regression
 jobs:
   test:
     timeout-minutes: 60
@@ -19,7 +29,14 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: |
+          if [ "${{ inputs.test_suite }}" = "smoke" ]; then
+            npx playwright test --grep "@smoke"
+          elif [ "${{ inputs.test_suite }}" = "smoke-sanity" ]; then
+            npx playwright test --grep "@smoke|@sanity"
+          elif [ "${{ inputs.test_suite }}" = "smoke-sanity-regression" ]; then
+            npx playwright test --grep "@smoke|@sanity|@regression"
+          fi
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
