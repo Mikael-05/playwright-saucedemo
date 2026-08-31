@@ -40,26 +40,30 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
-    - name: Run Playwright tests
+    # Détermine la suite à exécuter
+    - name: Define test suite
+      id: test_suite
       run: |
         if [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event_name }}" = "pull_request" ]; then
-          echo "Automatic execution → Smoke tests"
-          npx playwright test --grep "@smoke"
-
-        elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Manual execution → ${{ inputs.test_suite }}"
-
-          if [ "${{ inputs.test_suite }}" = "smoke" ]; then
-            npx playwright test --grep "@smoke"
-
-          elif [ "${{ inputs.test_suite }}" = "smoke-sanity" ]; then
-            npx playwright test --grep "@smoke|@sanity"
-
-          elif [ "${{ inputs.test_suite }}" = "smoke-sanity-regression" ]; then
-            npx playwright test --grep "@smoke|@sanity|@regression"
-          fi
+          echo "suite=smoke" >> "$GITHUB_OUTPUT"
+        else
+          echo "suite=${{ inputs.test_suite }}" >> "$GITHUB_OUTPUT"
         fi
 
+    # Lance les tests
+    - name: Run Playwright tests
+      run: |
+        if [ "${{ steps.test_suite.outputs.suite }}" = "smoke" ]; then
+          npx playwright test --grep "@smoke"
+
+        elif [ "${{ steps.test_suite.outputs.suite }}" = "smoke-sanity" ]; then
+          npx playwright test --grep "@smoke|@sanity"
+
+        elif [ "${{ steps.test_suite.outputs.suite }}" = "smoke-sanity-regression" ]; then
+          npx playwright test --grep "@smoke|@sanity|@regression"
+        fi
+
+    # Envoie les résultats à Testiny
     - name: Upload results to Testiny
       if: ${{ !cancelled() }}
       env:
@@ -67,7 +71,7 @@ jobs:
       run: |
         npx @testiny/cli automation \
           --project 1 \
-          --source playwright \
+          --source "${{ steps.test_suite.outputs.suite }}" \
           --playwright results/results.json
 
     - uses: actions/upload-artifact@v4
