@@ -4,9 +4,15 @@ import { Logger } from '../utils/Logger';
 
 Logger.info(`login.spec.ts`);
 
-test('Connexion avec un utilisateur valide', {
-  tag: ['@smoke', '@login']
-}, async ({ page }) => {
+test(
+  'Connexion avec un utilisateur valide',
+  {
+    tag: ['@smoke', '@login'],
+    annotation: {
+      type: 'testkey',
+      description: 'TC-1',
+    },
+  }, async ({ page }) => {
   const loginPage = new LoginPage(page);
 
   await loginPage.goto();
