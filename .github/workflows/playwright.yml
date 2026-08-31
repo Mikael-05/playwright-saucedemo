@@ -1,46 +1,65 @@
 name: Playwright Tests
+
 on:
   push:
     branches: [ main, master ]
+
   pull_request:
     branches: [ main, master ]
+
   workflow_dispatch:
-      inputs:
-        test_suite:
-          description: 'Suite de tests à exécuter'
-          required: true
-          default: 'smoke'
-          type: choice
-          options:
-            - smoke
-            - smoke-sanity
-            - smoke-sanity-regression
+    inputs:
+      test_suite:
+        description: 'Suite de tests à exécuter'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - smoke-sanity
+          - smoke-sanity-regression
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
+
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Testiny CLI
       run: npm install --no-save @testiny/cli@latest
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
     - name: Run Playwright tests
       run: |
+        if [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event_name }}" = "pull_request" ]; then
+          echo "Automatic execution → Smoke tests"
+          npx playwright test --grep "@smoke"
+
+        elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "Manual execution → ${{ inputs.test_suite }}"
+
           if [ "${{ inputs.test_suite }}" = "smoke" ]; then
             npx playwright test --grep "@smoke"
+
           elif [ "${{ inputs.test_suite }}" = "smoke-sanity" ]; then
             npx playwright test --grep "@smoke|@sanity"
+
           elif [ "${{ inputs.test_suite }}" = "smoke-sanity-regression" ]; then
             npx playwright test --grep "@smoke|@sanity|@regression"
           fi
+        fi
 
-    # AJOUT TESTINY
     - name: Upload results to Testiny
       if: ${{ !cancelled() }}
       env:
@@ -50,7 +69,7 @@ jobs:
           --project 1 \
           --source playwright \
           --playwright results/results.json
-          
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
