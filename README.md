@@ -1,5 +1,9 @@
 # Playwright TypeScript — SauceDemo Test Automation
 
+![Playwright](https://img.shields.io/badge/Playwright-45ba4b?logo=playwright&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-CI-2088FF?logo=githubactions&logoColor=white)
+
 ## 1. About the project
 
 This project is an end-to-end test automation framework built with Playwright and TypeScript, using SauceDemo as the application under test.
