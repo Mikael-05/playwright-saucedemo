@@ -307,5 +307,7 @@ The project is continuously evolving as I deepen my knowledge of Playwright, Typ
 ## 15. Author
 
 Mikael LOMBARD
+
 QA Automation / Test Automation
+
 This repository is part of my technical portfolio and demonstrates my approach to building automated end-to-end tests with Playwright and TypeScript.
